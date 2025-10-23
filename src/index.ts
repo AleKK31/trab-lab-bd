@@ -1,19 +1,18 @@
 import { AppDataSource } from "./data-source";
-import { User } from "./entity/artista.entity";
+import { ArtistaEntity } from "./entity/artista.entity";
 
 AppDataSource.initialize()
   .then(async () => {
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await AppDataSource.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
+    console.log("Inserting a new artist into the database...");
+    const artist = new ArtistaEntity();
+    artist.nome = "Test Artist";
+    artist.nacionalidade = "Brasil";
+    await AppDataSource.manager.save(artist);
+    console.log("Saved a new artist with id: " + artist.id);
 
-    console.log("Loading users from the database...");
-    const users = await AppDataSource.manager.find(User);
-    console.log("Loaded users: ", users);
+    console.log("Loading artists from the database...");
+    const artists = await AppDataSource.manager.find(ArtistaEntity);
+    console.log("Loaded artists: ", artists);
 
     console.log(
       "Here you can setup and run express / fastify / any other framework."
