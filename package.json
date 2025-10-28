@@ -9,9 +9,10 @@
       "typescript": "^5.8.2"
    },
    "dependencies": {
+      "dotenv": "^17.2.3",
+      "pg": "^8.14.1",
       "reflect-metadata": "^0.2.2",
-      "typeorm": "0.3.27",
-      "pg": "^8.14.1"
+      "typeorm": "0.3.27"
    },
    "scripts": {
       "start": "ts-node src/index.ts",

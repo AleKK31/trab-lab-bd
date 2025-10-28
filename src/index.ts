@@ -13,9 +13,5 @@ AppDataSource.initialize()
     console.log("Loading artists from the database...");
     const artists = await AppDataSource.manager.find(ArtistaEntity);
     console.log("Loaded artists: ", artists);
-
-    console.log(
-      "Here you can setup and run express / fastify / any other framework."
-    );
   })
   .catch((error) => console.log(error));
