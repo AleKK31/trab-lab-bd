@@ -14,13 +14,8 @@ async function main() {
   const playlistService = new PlaylistService();
 
   try {
-    // ============================================
-    // CRUD de ARTISTA
-    // ============================================
-    console.log("=== CRUD de ARTISTA ===");
-
     // Create
-    console.log("\n1. Criando artistas...");
+    console.log("\n1. Criando artistas");
     const artista1 = await artistaService.criar("Beatles", "Inglaterra");
     console.log("Artista criado:", artista1);
 
@@ -28,24 +23,19 @@ async function main() {
     console.log("Artista criado:", artista2);
 
     // Read by ID
-    console.log("\n2. Buscando artista por ID...");
+    console.log("\n2. Buscando artista por ID");
     const artistaEncontrado = await artistaService.buscarPorId(artista1.id);
     console.log("Artista encontrado:", artistaEncontrado);
 
     // Update
-    console.log("\n3. Atualizando artista...");
+    console.log("\n3. Atualizando artista");
     const artistaAtualizado = await artistaService.atualizar(artista1.id, {
       nacionalidade: "Reino Unido",
     });
     console.log("Artista atualizado:", artistaAtualizado);
 
-    // ============================================
-    // CRUD de MUSICA
-    // ============================================
-    console.log("\n\n=== CRUD de MUSICA ===");
-
     // Create
-    console.log("\n1. Criando músicas...");
+    console.log("\n1. Criando músicas");
     const musica1 = await musicaService.criar("Hey Jude", 431, artista1.id);
     console.log("Música criada:", musica1);
 
@@ -60,49 +50,43 @@ async function main() {
     console.log("Música criada:", musica3);
 
     // Read by ID
-    console.log("\n2. Buscando música por ID...");
+    console.log("\n2. Buscando música por ID");
     const musicaEncontrada = await musicaService.buscarPorId(musica1.id);
     console.log("Música encontrada:", musicaEncontrada);
 
     // Update
-    console.log("\n3. Atualizando música...");
+    console.log("\n3. Atualizando música");
     const musicaAtualizada = await musicaService.atualizar(musica1.id, {
       duracaoSegundos: 430,
     });
     console.log("Música atualizada:", musicaAtualizada);
 
     // Delete
-    console.log("\n4. Deletando música...");
+    console.log("\n4. Deletando música");
     const musica4 = await musicaService.criar("Teste Delete", 180, artista1.id);
     const deletado = await musicaService.deletar(musica4.id);
     console.log("Música deletada:", deletado);
 
-    // ============================================
     // Criação de USUARIO
-    // ============================================
     console.log("\n\n=== CRIANDO USUÁRIO ===");
     const usuario = await usuarioService.criar(
-      "Alexandre",
-      "alexandre@email.com"
+      "teste user",
+      "testeuser@email.com"
     );
     console.log("Usuário criado:", usuario);
 
-    // ============================================
     // Criação de PLAYLIST
-    // ============================================
     console.log("\n\n=== CRIANDO PLAYLIST ===");
     const playlist = await playlistService.criarPlaylist(
       usuario.id,
-      "Clássicos do Alexandre"
+      "Clássicos do teste user"
     );
     console.log("Playlist criada:", playlist);
 
-    // ============================================
     // Gerenciamento N:N - Adicionar músicas à playlist
-    // ============================================
     console.log("\n\n=== ADICIONANDO MÚSICAS À PLAYLIST ===");
 
-    console.log("\n1. Adicionando 'Hey Jude'...");
+    console.log("\n1. Adicionando 'Hey Jude'");
     const mp1 = await playlistService.adicionarMusica(
       musica1.id,
       playlist.playlistId,
@@ -110,7 +94,7 @@ async function main() {
     );
     console.log("Música adicionada:", mp1);
 
-    console.log("\n2. Adicionando 'Let It Be'...");
+    console.log("\n2. Adicionando 'Let It Be'");
     const mp2 = await playlistService.adicionarMusica(
       musica2.id,
       playlist.playlistId,
@@ -118,7 +102,7 @@ async function main() {
     );
     console.log("Música adicionada:", mp2);
 
-    console.log("\n3. Adicionando 'Que País é Este'...");
+    console.log("\n3. Adicionando 'Que País é Este'");
     const mp3 = await playlistService.adicionarMusica(
       musica3.id,
       playlist.playlistId,
@@ -126,9 +110,7 @@ async function main() {
     );
     console.log("Música adicionada:", mp3);
 
-    // ============================================
     // Listar músicas da playlist
-    // ============================================
     console.log("\n\n=== MÚSICAS NA PLAYLIST ===");
     const musicasDaPlaylist = await playlistService.buscarMusicasDaPlaylist(
       playlist.playlistId,
@@ -141,9 +123,7 @@ async function main() {
       );
     });
 
-    // ============================================
     // Gerenciamento N:N - Remover música da playlist
-    // ============================================
     console.log("\n\n=== REMOVENDO MÚSICA DA PLAYLIST ===");
     const removido = await playlistService.removerMusica(
       musica2.id,
@@ -164,9 +144,9 @@ async function main() {
       );
     });
 
-    console.log("\n\n✅ Todas as operações foram concluídas com sucesso!");
+    console.log("\n\nTodas as operações foram concluídas com sucesso!");
   } catch (error) {
-    console.error("❌ Erro:", error);
+    console.error("Erro:", error);
   } finally {
     await AppDataSource.destroy();
   }

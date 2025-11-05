@@ -7,12 +7,10 @@ export class PlaylistService {
   private musicaPlaylistRepository =
     AppDataSource.getRepository(MusicaPlaylistEntity);
 
-  // Create playlist for a user
   async criarPlaylist(
     usuarioId: number,
     nome: string
   ): Promise<PlaylistEntity> {
-    // Get the next playlist ID for this user
     const lastPlaylist = await this.playlistRepository.findOne({
       where: { usuarioId },
       order: { playlistId: "DESC" },
@@ -29,7 +27,6 @@ export class PlaylistService {
     return await this.playlistRepository.save(playlist);
   }
 
-  // Read playlist by ID
   async buscarPorId(
     playlistId: number,
     usuarioId: number
@@ -40,7 +37,6 @@ export class PlaylistService {
     });
   }
 
-  // Get all playlists for a user
   async buscarPorUsuario(usuarioId: number): Promise<PlaylistEntity[]> {
     return await this.playlistRepository.find({
       where: { usuarioId },
@@ -48,13 +44,11 @@ export class PlaylistService {
     });
   }
 
-  // Add music to playlist (N:N relationship)
   async adicionarMusica(
     musicaId: number,
     playlistId: number,
     usuarioId: number
   ): Promise<MusicaPlaylistEntity> {
-    // Get the next order number for this playlist
     const lastEntry = await this.musicaPlaylistRepository.findOne({
       where: { playlistId, usuarioId },
       order: { ordemNaPlaylist: "DESC" },
@@ -72,7 +66,6 @@ export class PlaylistService {
     return await this.musicaPlaylistRepository.save(musicaPlaylist);
   }
 
-  // Remove music from playlist (N:N relationship)
   async removerMusica(
     musicaId: number,
     playlistId: number,
@@ -87,7 +80,6 @@ export class PlaylistService {
     return result.affected ? result.affected > 0 : false;
   }
 
-  // Get all musics in a playlist
   async buscarMusicasDaPlaylist(
     playlistId: number,
     usuarioId: number

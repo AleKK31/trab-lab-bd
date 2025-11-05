@@ -4,7 +4,6 @@ import { MusicaEntity } from "../entity/musica.entity";
 export class MusicaService {
   private repository = AppDataSource.getRepository(MusicaEntity);
 
-  // Create
   async criar(
     titulo: string,
     duracaoSegundos: number,
@@ -18,7 +17,6 @@ export class MusicaService {
     return await this.repository.save(musica);
   }
 
-  // Read by ID
   async buscarPorId(id: number): Promise<MusicaEntity | null> {
     return await this.repository.findOne({
       where: { id },
@@ -26,14 +24,12 @@ export class MusicaService {
     });
   }
 
-  // Read all
   async buscarTodas(): Promise<MusicaEntity[]> {
     return await this.repository.find({
       relations: ["artista"],
     });
   }
 
-  // Update
   async atualizar(
     id: number,
     dados: { titulo?: string; duracaoSegundos?: number; artistaId?: number }
@@ -50,7 +46,6 @@ export class MusicaService {
     return await this.repository.save(musica);
   }
 
-  // Delete
   async deletar(id: number): Promise<boolean> {
     const result = await this.repository.delete(id);
     return result.affected ? result.affected > 0 : false;
