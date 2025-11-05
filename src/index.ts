@@ -14,7 +14,6 @@ async function main() {
   const playlistService = new PlaylistService();
 
   try {
-    // Create
     console.log("\n1. Criando artistas");
     const artista1 = await artistaService.criar("Beatles", "Inglaterra");
     console.log("Artista criado:", artista1);
@@ -22,19 +21,16 @@ async function main() {
     const artista2 = await artistaService.criar("Legião Urbana", "Brasil");
     console.log("Artista criado:", artista2);
 
-    // Read by ID
     console.log("\n2. Buscando artista por ID");
     const artistaEncontrado = await artistaService.buscarPorId(artista1.id);
     console.log("Artista encontrado:", artistaEncontrado);
 
-    // Update
     console.log("\n3. Atualizando artista");
     const artistaAtualizado = await artistaService.atualizar(artista1.id, {
       nacionalidade: "Reino Unido",
     });
     console.log("Artista atualizado:", artistaAtualizado);
 
-    // Create
     console.log("\n1. Criando músicas");
     const musica1 = await musicaService.criar("Hey Jude", 431, artista1.id);
     console.log("Música criada:", musica1);
@@ -49,25 +45,21 @@ async function main() {
     );
     console.log("Música criada:", musica3);
 
-    // Read by ID
     console.log("\n2. Buscando música por ID");
     const musicaEncontrada = await musicaService.buscarPorId(musica1.id);
     console.log("Música encontrada:", musicaEncontrada);
 
-    // Update
     console.log("\n3. Atualizando música");
     const musicaAtualizada = await musicaService.atualizar(musica1.id, {
       duracaoSegundos: 430,
     });
     console.log("Música atualizada:", musicaAtualizada);
 
-    // Delete
     console.log("\n4. Deletando música");
     const musica4 = await musicaService.criar("Teste Delete", 180, artista1.id);
     const deletado = await musicaService.deletar(musica4.id);
     console.log("Música deletada:", deletado);
 
-    // Criação de USUARIO
     console.log("\n\n=== CRIANDO USUÁRIO ===");
     const usuario = await usuarioService.criar(
       "teste user",
@@ -75,7 +67,6 @@ async function main() {
     );
     console.log("Usuário criado:", usuario);
 
-    // Criação de PLAYLIST
     console.log("\n\n=== CRIANDO PLAYLIST ===");
     const playlist = await playlistService.criarPlaylist(
       usuario.id,
@@ -83,7 +74,6 @@ async function main() {
     );
     console.log("Playlist criada:", playlist);
 
-    // Gerenciamento N:N - Adicionar músicas à playlist
     console.log("\n\n=== ADICIONANDO MÚSICAS À PLAYLIST ===");
 
     console.log("\n1. Adicionando 'Hey Jude'");
@@ -110,7 +100,6 @@ async function main() {
     );
     console.log("Música adicionada:", mp3);
 
-    // Listar músicas da playlist
     console.log("\n\n=== MÚSICAS NA PLAYLIST ===");
     const musicasDaPlaylist = await playlistService.buscarMusicasDaPlaylist(
       playlist.playlistId,
@@ -123,7 +112,6 @@ async function main() {
       );
     });
 
-    // Gerenciamento N:N - Remover música da playlist
     console.log("\n\n=== REMOVENDO MÚSICA DA PLAYLIST ===");
     const removido = await playlistService.removerMusica(
       musica2.id,
