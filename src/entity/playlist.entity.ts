@@ -14,7 +14,7 @@ export class PlaylistEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ name: "playlist_id" })
   playlistId: number;
 
-  @PrimaryColumn({ name: "usuario_id" })
+  @PrimaryColumn({ name: "usuario_id", nullable: false })
   usuarioId: number;
 
   @Column({
