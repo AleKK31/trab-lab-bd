@@ -5,12 +5,13 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { UsuarioEntity } from "./usuario.entity";
 
 @Entity({ name: "playlist" })
 export class PlaylistEntity extends BaseEntity {
-  @PrimaryColumn({ name: "playlist_id" })
+  @PrimaryGeneratedColumn({ name: "playlist_id" })
   playlistId: number;
 
   @PrimaryColumn({ name: "usuario_id" })
