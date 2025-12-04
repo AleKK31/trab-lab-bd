@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { MusicaEntity } from "./musica.entity";
 
 @Entity({ name: "artista" })
 export class ArtistaEntity extends BaseEntity {
@@ -20,4 +27,7 @@ export class ArtistaEntity extends BaseEntity {
     length: 100,
   })
   nacionalidade: string;
+
+  @OneToMany(() => MusicaEntity, (musica) => musica.artista)
+  musicas: MusicaEntity[];
 }

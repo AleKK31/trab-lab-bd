@@ -5,9 +5,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { ArtistaEntity } from "./artista.entity";
+import { MusicaPlaylistEntity } from "./musicaPlaylist.entity";
 
 @Entity({ name: "musica" })
 @Check("duracao_segundos > 0")
@@ -40,4 +42,7 @@ export class MusicaEntity extends BaseEntity {
   @ManyToOne(() => ArtistaEntity, { onDelete: "RESTRICT" })
   @JoinColumn({ name: "artista_id" })
   artista: ArtistaEntity;
+
+  @OneToMany(() => MusicaPlaylistEntity, (mp) => mp.musica)
+  musicaPlaylists: MusicaPlaylistEntity[];
 }
