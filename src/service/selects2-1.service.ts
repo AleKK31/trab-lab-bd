@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { ArtistaEntity } from "../entity/artista.entity";
+import { MusicaEntity } from "../entity/musica.entity";
 import { MusicaPlaylistEntity } from "../entity/musicaPlaylist.entity";
 import { PlaylistEntity } from "../entity/playlist.entity";
 import { UsuarioEntity } from "../entity/usuario.entity";
@@ -10,6 +11,7 @@ export class SelectsService {
     AppDataSource.getRepository(MusicaPlaylistEntity);
   private artistasRepository = AppDataSource.getRepository(ArtistaEntity);
   private usuarioRepository = AppDataSource.getRepository(UsuarioEntity);
+  private musicaRepository = AppDataSource.getRepository(MusicaEntity);
 
   async listarPlaylistsPorUsername(username: string) {
     const playlist = await this.playlistRepository
@@ -77,4 +79,54 @@ export class SelectsService {
       .select(["artista.id", "artista.nome"])
       .getMany();
   }
+
+  async listarMusicaComArtista(musicaId: number) {
+    return await this.musicaRepository
+    .createQueryBuilder("musica")
+    .leftJoinAndSelect("musica.artista", "artista")
+    .where("musica.id = :musicaId", { musicaId })
+    .getMany()
+  }
+
+  async listarTotalReproducaoPlaylist(){
+    return await this.musicaPlaylistRepository
+    .createQueryBuilder("mp")
+    .innerJoin("mp.musica", "musica")
+    .innerJoin("mp.playlist", "playlist")
+    .innerJoin("playlist.usuario", "usuario")
+    .select("playlist.nome", "playlistNome")
+    .addSelect("SUM(musica.duracao_segundos)", "tempoDeReproducao")
+    .groupBy("playlist.playlist_id")
+    .addGroupBy("playlist.nome")
+    .addGroupBy("playlist.usuario_id").getRawMany();
+
+  }
+
+  async listarMusicasComDuracaoMenorQueMediaDoArtista() {
+    return await this.musicaRepository
+      .createQueryBuilder("musica")
+      .where(sb => {
+        const subquery = sb.subQuery()
+        .select("AVG(musica2.duracao_segundos)")
+        .from(MusicaEntity, "musica2")
+        .where("musica2.artista_id = musica.artista_id")
+        .getQuery();
+        return "musica.duracao_segundos < " + subquery;
+      })
+      .getMany();
+  }
+
+  async listarMusicasComOrdemNaPlaylist() {
+    return await this.musicaPlaylistRepository
+      .createQueryBuilder("mp")
+      .innerJoin("mp.musica", "musica")
+      .innerJoin("mp.playlist", "playlist")
+      .where("playlist.nome = :nome", {nome : "Rock do Pablo"})
+      .select("musica.titulo", "titulo")
+      .addSelect("mp.ordem_na_playlist", "ordemNaPlaylist")
+      .orderBy("mp.ordem_na_playlist", "ASC")
+      .getRawMany();
+  }
+
+
 }
