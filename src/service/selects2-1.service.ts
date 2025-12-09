@@ -64,7 +64,7 @@ export class SelectsService {
     //       artista: { nome: artistaNome },
     //     },
     //   },
-    //   relations: ["playlist", "playlist.usuario", "musica", "musica.artista"],
+    //   relations: ["playlist.usuario", "musica"],
     //   select: {
     //     musica: { titulo: true },
     //     playlist: { nome: true },
