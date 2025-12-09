@@ -54,6 +54,23 @@ export class SelectsService {
       .getRawMany();
 
     return musicas;
+
+    // return await this.musicaPlaylistRepository.find({
+    //   where: {
+    //     playlist: {
+    //       usuario: { username },
+    //     },
+    //     musica: {
+    //       artista: { nome: artistaNome },
+    //     },
+    //   },
+    //   relations: ["playlist", "playlist.usuario", "musica", "musica.artista"],
+    //   select: {
+    //     musica: { titulo: true },
+    //     playlist: { nome: true },
+    //     musica: { artista: { nome: true } },
+    //   },
+    // });
   }
 
   async listarPlaylistsComContagemDeMusicas() {
