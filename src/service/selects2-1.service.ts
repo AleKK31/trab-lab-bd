@@ -28,7 +28,7 @@ export class SelectsService {
   async listarPlaylistsPorUsername2(username: string) {
     const plasy2 = await this.playlistRepository.find({
       where: { usuario: { username } },
-      select: ["nome", "dataCriacao"],
+      select: { nome: true, dataCriacao: true },
       relations: ["usuario"],
     });
     return plasy2;
