@@ -23,12 +23,15 @@ export class SelectsService {
       .getRawMany();
 
     return playlist;
-    // const plasy2 = await this.playlistRepository.find({
-    //   where: { usuario: { usemusicaPlaylistRepositoryrname } },
-    //   select: ["nome", "dataCriacao"],
-    //   relations: ["usuario"],
-    // });
-    // return plasy2;
+  }
+
+  async listarPlaylistsPorUsername2(username: string) {
+    const plasy2 = await this.playlistRepository.find({
+      where: { usuario: { username } },
+      select: ["nome", "dataCriacao"],
+      relations: ["usuario"],
+    });
+    return plasy2;
   }
 
   async listarMusicasDePlaylistsPorUsuarioEArtista(

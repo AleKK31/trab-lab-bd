@@ -18,7 +18,11 @@
    "scripts": {
       "start": "ts-node src/index.ts",
       "test": "ts-node src/test.ts",
-      "selects": "ts-node src/selects2-1.ts",
+      "select1": "ts-node src/selects2-1.ts",
+      "select2": "ts-node src/selects2-2.ts",
+      "select3": "ts-node src/selects2-3.ts",
+      "select4": "ts-node src/selects2-4.ts",
+      "select5": "ts-node src/selects2-5.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }
